@@ -101,6 +101,7 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
       display={"flex"}
       justifyContent={"center"}
       alignItems={"center"}
+      padding={{ base: "10px", xl: "0px" }}
     >
       <Formik
         initialValues={initialValues}
@@ -115,7 +116,7 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
             flexDirection={"column"}
             justifyContent={{ base: "", xl: "start" }}
             alignItems={{ base: "", xl: "start" }}
-            paddingX={{ base: "0px", xl: "32px" }}
+            paddingX={{ base: "10px", xl: "32px" }}
             paddingY={{ base: "10px", xl: "48px" }}
             gap={{ base: "10px", xl: "32px" }}
             shadow={"md"}

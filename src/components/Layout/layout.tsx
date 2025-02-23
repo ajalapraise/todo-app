@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, Box } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import { Sidebar } from "../sidebar";
 import { useQueryState } from "nuqs";
 import { ListForm } from "../calender/ListForm";
@@ -11,11 +11,12 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
   const isFormOpenBoolean = isFormOpen === "open";
   return (
     <>
-      <HStack
+      <Stack
         width={"100vw"}
         height={"100vh"}
+        direction={{ base: "column", xl: "row" }}
         justifyContent={"start"}
-        overflow={"hidden"}
+        overflow={{ base: "auto", xl: "hidden" }}
         alignItems={"start"}
         maxWidth={"1440px"}
         marginX={"auto"}
@@ -23,15 +24,15 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
         dropShadow={"md"}
         backgroundColor={"white"}
         minHeight={"100vh"}
-        display={"flex"}
+        display={isFormOpenBoolean ? { base: "none", xl: "flex" } : "flex"}
         opacity={{ base: "", xl: isFormOpenBoolean ? "0.2" : "1" }}
         position={{ xl: "relative" }}
       >
         <Sidebar />
-        <Box width={"80%"} height="100%">
+        <Box width={{ base: "100%", xl: "80%" }} height="100%">
           {children}
         </Box>
-      </HStack>
+      </Stack>
 
       <Box
         width={"100vw"}
@@ -42,7 +43,7 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
         transform={{ xl: "translate(-50%, -50%)" }}
         zIndex={{ xl: isFormOpenBoolean ? "1" : "-1" }}
         display={"flex"}
-        justifyContent={"center"}
+        justifyContent={{ base: "start", xl: "center" }}
         alignItems={"center"}
       >
         <ListForm isOpen={isFormOpenBoolean} onClose={closeForm} />
