@@ -1,7 +1,7 @@
 import { Box, HStack, Text, VStack, Image, Button } from "@chakra-ui/react";
 import React, { useRef } from "react";
 import { Plus, Ellipsis } from "lucide-react";
-import { DataType, ItemStatus } from "@/pages/data/data";
+import { DataType, ItemStatus } from "@/data/data";
 import Flag from "../../../public/icons/Flag";
 import { formatDate } from "./Calendar";
 import { useQueryState } from "nuqs";

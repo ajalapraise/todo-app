@@ -1,4 +1,4 @@
-import { DataType, ItemStatus } from "@/pages/data/data";
+import { DataType, ItemStatus } from "@/data/data";
 import * as Yup from "yup";
 
 export const validationSchema = Yup.object({
@@ -91,17 +91,17 @@ export const groupTasksByDateAndStatus = (tasks: DataType[]) => {
     );
 };
 
-export   const getTasksFromLocalStorage = (): DataType[] => {
+export const getTasksFromLocalStorage = (): DataType[] => {
     try {
-      const storedData = localStorage.getItem("CalendarData");
-      if (!storedData) return [];
-      const parsedData = JSON.parse(storedData);
-      return Array.isArray(parsedData) ? parsedData : [];
+        const storedData = localStorage.getItem("CalendarData");
+        if (!storedData) return [];
+        const parsedData = JSON.parse(storedData);
+        return Array.isArray(parsedData) ? parsedData : [];
     } catch (error) {
-      console.error("Error parsing CalendarData from localStorage:", error);
-      return [];
+        console.error("Error parsing CalendarData from localStorage:", error);
+        return [];
     }
-  };
-  
+};
+
 
 
