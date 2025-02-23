@@ -18,7 +18,7 @@ import {
   isToday,
   validationSchema,
 } from "../utils";
-import saveTaskToLocalStorage, { Priority } from "@/pages/data/data";
+import { Priority, SaveTaskToLocalStorage } from "@/data/data";
 import { ReactSVG } from "react-svg";
 import {
   FileUploadList,
@@ -74,10 +74,9 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
       const updatedValues = { ...values, coverImage: coverImageName || "" };
 
       if (taskId) {
-        console.log(updatedValues);
-        saveTaskToLocalStorage({ ...updatedValues, id: taskId });
+        SaveTaskToLocalStorage({ ...updatedValues, id: taskId });
       } else {
-        saveTaskToLocalStorage({
+        SaveTaskToLocalStorage({
           ...updatedValues,
         });
       }

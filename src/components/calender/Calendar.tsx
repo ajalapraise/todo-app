@@ -1,4 +1,5 @@
-import { DataType, ItemStatus } from "@/pages/data/data";
+"use client";
+import { DataType, ItemStatus } from "@/data/data";
 import { VStack, Box, Button, Text, HStack, Input } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
