@@ -41,7 +41,7 @@ export const TodoListGroup = ({
   return (
     <Box
       ref={drop}
-      width={"33%"}
+      width={{ base: "100%", xl: "33%" }}
       height={"100%"}
       bgColor={isOver ? "#E2E8F0" : "#F5F7F9"}
       borderRadius={"8px"}

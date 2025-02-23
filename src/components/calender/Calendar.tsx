@@ -1,6 +1,14 @@
 "use client";
 import { DataType, ItemStatus } from "@/data/data";
-import { VStack, Box, Button, Text, HStack, Input } from "@chakra-ui/react";
+import {
+  VStack,
+  Box,
+  Button,
+  Text,
+  HStack,
+  Input,
+  Stack,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import { TodoListGroup, TodoListItem } from "./TodoList";
@@ -240,7 +248,11 @@ export const Calendar = () => {
       justifyContent={"start"}
       alignItems={"start"}
     >
-      <HStack justifyContent={"space-between"} width={"100%"}>
+      <Stack
+        justifyContent={"space-between"}
+        width={"100%"}
+        direction={{ base: "column", md: "row" }}
+      >
         {" "}
         <HStack gap="10px">
           <Text fontSize={"30px"} fontWeight={"bold"}>
@@ -291,13 +303,14 @@ export const Calendar = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
           />{" "}
         </HStack>
-      </HStack>
+      </Stack>
 
-      <HStack
+      <Stack
         justifyContent={"space-between"}
         alignItems={"start"}
         width={"100%"}
         mt={"20px"}
+        direction={{ base: "column", md: "row" }}
       >
         <TodoListGroup
           onDropTask={handleDrop}
@@ -365,7 +378,7 @@ export const Calendar = () => {
             </Box>
           ))}
         </TodoListGroup>
-      </HStack>
+      </Stack>
     </VStack>
   );
 };
