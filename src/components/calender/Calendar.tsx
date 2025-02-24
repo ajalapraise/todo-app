@@ -1,5 +1,5 @@
 "use client";
-import { DataType, ItemStatus } from "@/data/data";
+import { DataType, ItemStatus, Priority } from "@/data/data";
 import {
   VStack,
   Box,
@@ -14,6 +14,7 @@ import { ArrowLeft, ArrowRight, Search } from "lucide-react";
 import { TodoListGroup, TodoListItem } from "./TodoList";
 import { groupTasksByDateAndStatus } from "../utils";
 import { useQueryState } from "nuqs";
+import { toaster } from "@/components/ui/toaster";
 
 export const formatDate = (dateStr: string) => {
   return new Date(dateStr).toLocaleDateString("en-GB", {
@@ -200,6 +201,14 @@ export const Calendar = () => {
       {} as Record<string, DataType[]>
     );
 
+    for (const date in tasksByDate) {
+      tasksByDate[date].sort((a, b) => {
+        const aIndex = Priority.toString().indexOf(a.priority);
+        const bIndex = Priority.toString().indexOf(b.priority);
+        return aIndex - bIndex;
+      });
+    }
+
     setTasks(tasksByDate);
 
     const taskDeadlines = parsedTasks
@@ -234,6 +243,10 @@ export const Calendar = () => {
       localStorage.setItem("CalendarData", JSON.stringify(updatedTasks));
       return updatedTasks;
     });
+    toaster.create({
+      description: "Task Deleted",
+      type: "success",
+    });
   };
 
   const handleEdit = (id: string) => {
@@ -244,7 +257,7 @@ export const Calendar = () => {
   return (
     <VStack
       width={"100%"}
-      padding={"50px 20px 0px"}
+      padding={{ base: "20px ", xl: "50px 20px 0px" }}
       justifyContent={"start"}
       alignItems={"start"}
     >
@@ -255,7 +268,7 @@ export const Calendar = () => {
       >
         {" "}
         <HStack gap="10px">
-          <Text fontSize={"30px"} fontWeight={"bold"}>
+          <Text fontSize={{ base: "24px", xl: "30px" }} fontWeight={"bold"}>
             {currentDate ? currentDate.toDateString() : "No tasks available"}
           </Text>
           <Button
@@ -266,6 +279,8 @@ export const Calendar = () => {
             border={"1px solid #DCDCDC"}
             onClick={handlePrevious}
             disabled={!hasPrevious}
+            justifyContent={"center"}
+            alignItems={"center"}
           >
             <ArrowLeft />
           </Button>
@@ -277,12 +292,14 @@ export const Calendar = () => {
             border={"1px solid #DCDCDC"}
             onClick={handleNext}
             disabled={!hasNext}
+            justifyContent={"center"}
+            alignItems={"center"}
           >
             <ArrowRight />
           </Button>
         </HStack>
         <HStack
-          width="236px"
+          width={{ base: "100%", xl: "236px" }}
           height="40px"
           borderRadius={"6px"}
           py="8px"
@@ -294,7 +311,7 @@ export const Calendar = () => {
           <Input
             placeholder="Search"
             value={searchQuery}
-            width={"190px"}
+            width={{ base: "100%", xl: "190px" }}
             height={"100%"}
             _focus={{
               borderWidth: "0px",
@@ -318,7 +335,7 @@ export const Calendar = () => {
           itemNumber={filteredTasks?.Pending.length ?? 0}
         >
           {filteredTasks.Pending.map((task) => (
-            <Box key={task.id}>
+            <Box key={task.id} overflow={"auto"} height={"100%"}>
               <TodoListItem
                 id={task?.id}
                 taskName={task.taskName}

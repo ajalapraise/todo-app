@@ -42,12 +42,13 @@ export const TodoListGroup = ({
     <Box
       ref={drop}
       width={{ base: "100%", xl: "33%" }}
-      height={"100%"}
+      maxHeight={"100vh"}
       bgColor={isOver ? "#E2E8F0" : "#F5F7F9"}
       borderRadius={"8px"}
       padding="10px"
+      overflowY={"auto"}
     >
-      <HStack width={"100%"} height={"24px"} justifyContent={"space-between"}>
+      <HStack width={"100%"} height={"44px"} justifyContent={"space-between"}>
         <HStack gap={"8px"}>
           <Text
             fontSize={"16px"}
