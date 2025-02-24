@@ -42,7 +42,7 @@ export const TodoListGroup = ({
     <Box
       ref={drop}
       width={{ base: "100%", xl: "33%" }}
-      maxHeight={"100vh"}
+      maxHeight={"80vh"}
       bgColor={isOver ? "#E2E8F0" : "#F5F7F9"}
       borderRadius={"8px"}
       padding="10px"

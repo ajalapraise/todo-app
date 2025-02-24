@@ -14,6 +14,7 @@ export interface DataType {
 
 export const Priority: PriorityType[] = ["High", "Medium", "Low"];
 
+
 export const SaveTaskToLocalStorage = (task: DataType): DataType[] => {
   let existingTasks: DataType[] = [];
 
@@ -34,27 +35,38 @@ export const SaveTaskToLocalStorage = (task: DataType): DataType[] => {
     return lastTask?.id ? lastTask.id + 1 : 100;
   };
 
-  const filteredTasks = existingTasks.filter(
-    (existingTask) => existingTask.id !== task.id
-  );
+  const taskId = task.id !== undefined ? Number(task.id) : undefined;
 
-  localStorage.setItem("CalendarData", JSON.stringify(filteredTasks));
+  const taskIndex = taskId !== undefined
+    ? existingTasks.findIndex(t => t.id === taskId)
+    : -1;
 
-  const newTask: DataType = {
-    id: task.id ?? getLastTaskId(),
-    taskName: task.taskName,
-    description: task.description || "",
-    priority: task.priority || "Low",
-    coverImage: task.coverImage || "",
-    deadline: task.deadline,
-    time: task.time,
-    status: task.status || "Pending",
-  };
+  if (taskIndex !== -1) {
+    existingTasks[taskIndex] = {
+      ...existingTasks[taskIndex],
+      taskName: task.taskName,
+      description: task.description || "",
+      priority: task.priority || "Low",
+      coverImage: task.coverImage || "",
+      deadline: task.deadline,
+      time: task.time,
+      status: task.status || "Pending",
+    };
+  } else {
+    const newTask: DataType = {
+      id: taskId !== undefined ? taskId : getLastTaskId(),
+      taskName: task.taskName,
+      description: task.description || "",
+      priority: task.priority || "Low",
+      coverImage: task.coverImage || "",
+      deadline: task.deadline,
+      time: task.time,
+      status: task.status || "Pending",
+    };
+    existingTasks.push(newTask);
+  }
 
-  const updatedTasks = [...filteredTasks, newTask];
-
-  // Save back to localStorage with the new task included
-  localStorage.setItem("CalendarData", JSON.stringify(updatedTasks));
-
-  return updatedTasks;
+  localStorage.setItem("CalendarData", JSON.stringify(existingTasks));
+  return existingTasks;
 };
+
