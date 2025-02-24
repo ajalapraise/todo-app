@@ -10,7 +10,7 @@ import {
   HStack,
   VStack,
 } from "@chakra-ui/react";
-import { Formik, Form } from "formik";
+import { Formik, Form, ErrorMessage } from "formik";
 import { X } from "lucide-react";
 import {
   getCurrentTime,
@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/file-upload";
 import { useQueryState } from "nuqs";
 import { useReload } from "../hooks/useReload";
+import { toaster } from "@/components/ui/toaster";
 
 interface FormProps {
   isOpen: boolean;
@@ -80,11 +81,19 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
           ...updatedValues,
         });
       }
+      toaster.create({
+        description: taskId ? "Task updated" : "Task added",
+        type: "success",
+      });
       resetForm();
       onClose();
       reload();
     } catch (error) {
       console.error("Failed to save task:", error);
+      toaster.create({
+        description: taskId ? "error updating   " : "Error adding task",
+        type: "error",
+      });
     } finally {
       setSubmitting(false);
       setIsFormOpen(null);
@@ -108,7 +117,7 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ values, handleChange, setValues, isValid }) => (
+        {({ values, handleChange, setValues }) => (
           <Box
             width={{ base: "100%", xl: "517px" }}
             height={{ base: "100%", xl: "844px" }}
@@ -161,10 +170,18 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
               >
                 <Text
                   fontWeight={"semibold"}
-                  fontSize={"14px"}
+                  fontSize={{ base: "10px", xl: "14px" }}
                   lineHeight={"20px"}
                 >
-                  Task Name
+                  Task Name{" "}
+                  <Text
+                    as="span"
+                    color="red.500"
+                    fontSize="8px"
+                    paddingX={"12px"}
+                  >
+                    <ErrorMessage name="taskName" />
+                  </Text>
                 </Text>
                 <Input
                   placeholder={"Enter task name"}
@@ -243,10 +260,18 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
               >
                 <Text
                   fontWeight={"semibold"}
-                  fontSize={"14px"}
+                  fontSize={{ base: "10px", xl: "14px" }}
                   lineHeight={"20px"}
                 >
-                  Priority
+                  Priority{" "}
+                  <Text
+                    as="span"
+                    color="red.500"
+                    fontSize="8px"
+                    paddingX={"12px"}
+                  >
+                    <ErrorMessage name="priority" />
+                  </Text>
                 </Text>{" "}
                 <NativeSelectRoot
                   variant={"subtle"}
@@ -396,10 +421,18 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
                 >
                   <Text
                     fontWeight={"semibold"}
-                    fontSize={"14px"}
+                    fontSize={{ base: "10px", xl: "14px" }}
                     lineHeight={"20px"}
                   >
-                    Deadline
+                    Deadline{" "}
+                    <Text
+                      as="span"
+                      color="red.500"
+                      fontSize="8px"
+                      paddingX={"12px"}
+                    >
+                      <ErrorMessage name="deadline" />
+                    </Text>
                   </Text>{" "}
                   <Input
                     type={"date"}
@@ -433,10 +466,18 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
                 >
                   <Text
                     fontWeight={"semibold"}
-                    fontSize={"14px"}
+                    fontSize={{ base: "10px", xl: "14px" }}
                     lineHeight={"20px"}
                   >
-                    Time
+                    Time{" "}
+                    <Text
+                      as="span"
+                      color="red.500"
+                      fontSize="8px"
+                      paddingX={"12px"}
+                    >
+                      <ErrorMessage name="time" />
+                    </Text>
                   </Text>{" "}
                   <Input
                     type={"time"}
@@ -475,7 +516,7 @@ export const ListForm = ({ isOpen, onClose }: FormProps) => {
                 color="white"
                 fontWeight={"semibold"}
                 fontSize="16px"
-                disabled={submitting || !isValid}
+                disabled={submitting}
               >
                 {taskId ? "Save" : "Add"}
               </Button>

@@ -112,25 +112,54 @@ export const Sidebar = () => {
           </Box>
         ))}
       </Box>
-      <Box width={{ base: "100%", xl: "0%" }}>
+      <Box
+        width={{ base: "100%", xl: "0%" }}
+        display={{ base: "flex", xl: "none" }}
+      >
         <DrawerRoot size="full">
           <DrawerBackdrop />
-          <DrawerTrigger
-            asChild
-            display={{
-              base: "flex",
-              sm: "flex",
-              md: "flex",
-              lg: "none",
-              xl: "none",
-            }}
-            width="100%"
-            justifyContent={"start"}
+          <HStack
+            height={"100px"}
+            width={"100%"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+            px="20px"
           >
-            <Button variant="plain" top="20px" left="10px">
-              <Menu />
-            </Button>
-          </DrawerTrigger>
+            <Box
+              width={"200px"}
+              height={"40px"}
+              display={"flex"}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Box
+                width={"100%"}
+                height={"44px"}
+                display={"flex"}
+                justifyContent={"center"}
+                alignItems={"center"}
+                marginX={"auto"}
+              >
+                <Link href="/">
+                  <ReactSVG src={`/logo.svg`} width={"100%"} height={"100%"} />
+                </Link>
+              </Box>
+            </Box>
+            <DrawerTrigger
+              asChild
+              display={{
+                base: "flex",
+                sm: "flex",
+                md: "flex",
+                lg: "none",
+                xl: "none",
+              }}
+            >
+              <Button variant="plain">
+                <Menu />
+              </Button>
+            </DrawerTrigger>
+          </HStack>
           <DrawerContent
             offset="4"
             rounded="md"
@@ -161,14 +190,16 @@ export const Sidebar = () => {
             <DrawerBody
               display={{ base: "flex", xl: "none" }}
               flexDirection="column"
-              width="100%"
+              width="100vw"
+              height="100vh"
+              overflow="none"
               gap="30px"
-              justifyContent="center"
+              justifyContent="start"
             >
               <DrawerCloseTrigger asChild>
                 <Box
                   width={"100%"}
-                  height={"60px"}
+                  height={"40px"}
                   display={"flex"}
                   justifyContent={"center"}
                   alignItems={"center"}
@@ -199,7 +230,7 @@ export const Sidebar = () => {
                     justifyContent={"start"}
                     alignItems={"center"}
                     width={"100%"}
-                    height={"76px"}
+                    height={"60px"}
                     cursor={"pointer"}
                     paddingLeft={"20px"}
                     gapX={"20px"}
